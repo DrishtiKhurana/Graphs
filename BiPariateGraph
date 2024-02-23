@@ -1,0 +1,31 @@
+class Solution {
+    public boolean isBipartite(int[][] graph) {
+        int n = graph.length;
+        int[] colors = new int[n];			
+		Arrays.fill(colors,-1);
+        for (int i = 0; i < n; i++) {              //This graph might be a disconnected graph. So check each unvisited node.
+            if (colors[i] == -1){
+            if(dfs(graph, colors, 0, i)==false) {
+                return false;
+            }
+        }
+        
+    }
+    return true;
+    }
+    
+    public boolean dfs(int[][] graph, int[] colors, int color, int node) {
+              colors[node] = color;       
+        for (int it : graph[node]) {
+              // if uncoloured
+            if(colors[it] == -1) {
+                if(dfs(graph, colors, 1-color, it) == false) return false; 
+            }
+            // if previously coloured and have the same colour
+            else if(colors[it] == color) {
+                return false; 
+            }
+        }
+        return true;
+    }
+}
